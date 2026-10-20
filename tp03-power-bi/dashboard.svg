@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="700" viewBox="0 0 1100 700">
+<rect width="1100" height="700" fill="#f3f6fb"/>
+<text x="35" y="42" font-family="Arial" font-size="25" font-weight="bold" fill="#172554">TP03 Sales Analysis Dashboard</text>
+<rect x="35" y="65" width="220" height="90" rx="8" fill="#1d4ed8"/><rect x="275" y="65" width="220" height="90" rx="8" fill="#0f766e"/><rect x="515" y="65" width="220" height="90" rx="8" fill="#7c3aed"/>
+<text x="55" y="96" font-family="Arial" font-size="15" fill="white">TOTAL SALES</text><text x="55" y="136" font-family="Arial" font-size="30" font-weight="bold" fill="white">10,730</text>
+<text x="295" y="96" font-family="Arial" font-size="15" fill="white">TOTAL QUANTITY</text><text x="295" y="136" font-family="Arial" font-size="30" font-weight="bold" fill="white">95</text>
+<text x="535" y="96" font-family="Arial" font-size="15" fill="white">ORDER COUNT</text><text x="535" y="136" font-family="Arial" font-size="30" font-weight="bold" fill="white">12</text>
+<rect x="775" y="65" width="140" height="40" rx="5" fill="white" stroke="#cbd5e1"/><rect x="930" y="65" width="140" height="40" rx="5" fill="white" stroke="#cbd5e1"/>
+<text x="790" y="90" font-family="Arial" font-size="14" fill="#334155">Region: All</text><text x="945" y="90" font-family="Arial" font-size="14" fill="#334155">Category: All</text>
+<rect x="35" y="185" width="500" height="225" rx="8" fill="white" stroke="#dbe3ef"/><rect x="565" y="185" width="500" height="225" rx="8" fill="white" stroke="#dbe3ef"/>
+<text x="55" y="215" font-family="Arial" font-size="17" font-weight="bold" fill="#172554">Sales by Category</text><text x="585" y="215" font-family="Arial" font-size="17" font-weight="bold" fill="#172554">Sales by Region</text>
+<line x1="80" y1="370" x2="490" y2="370" stroke="#94a3b8"/><line x1="610" y1="370" x2="1020" y2="370" stroke="#94a3b8"/>
+<rect x="105" y="255" width="80" height="115" fill="#2563eb"/><rect x="235" y="275" width="80" height="95" fill="#14b8a6"/><rect x="365" y="285" width="80" height="85" fill="#8b5cf6"/>
+<text x="112" y="392" font-family="Arial" font-size="14">Compute</text><text x="244" y="392" font-family="Arial" font-size="14">Storage</text><text x="380" y="392" font-family="Arial" font-size="14">Network</text>
+<rect x="645" y="270" width="80" height="100" fill="#2563eb"/><rect x="795" y="295" width="80" height="75" fill="#14b8a6"/><rect x="945" y="250" width="80" height="120" fill="#8b5cf6"/>
+<text x="665" y="392" font-family="Arial" font-size="14">North</text><text x="812" y="392" font-family="Arial" font-size="14">South</text><text x="962" y="392" font-family="Arial" font-size="14">East</text>
+<rect x="35" y="440" width="1030" height="220" rx="8" fill="white" stroke="#dbe3ef"/><text x="55" y="470" font-family="Arial" font-size="17" font-weight="bold" fill="#172554">Sales Trend</text>
+<polyline points="90,600 330,570 570,535 810,485" fill="none" stroke="#2563eb" stroke-width="4"/><circle cx="90" cy="600" r="6" fill="#2563eb"/><circle cx="330" cy="570" r="6" fill="#2563eb"/><circle cx="570" cy="535" r="6" fill="#2563eb"/><circle cx="810" cy="485" r="6" fill="#2563eb"/>
+<text x="75" y="630" font-family="Arial" font-size="14">Jan</text><text x="315" y="630" font-family="Arial" font-size="14">Feb</text><text x="555" y="630" font-family="Arial" font-size="14">Mar</text><text x="795" y="630" font-family="Arial" font-size="14">Apr</text>
+</svg>

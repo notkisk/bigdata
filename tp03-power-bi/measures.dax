@@ -1,0 +1,4 @@
+Total Sales = SUM(File[Sales])
+Average Sale = AVERAGE(File[Sales])
+Total Quantity = SUM(File[Quantity])
+Order Count = COUNTROWS(File)

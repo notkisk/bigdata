@@ -1,0 +1,13 @@
+Date,Region,Category,Sales,Quantity
+2026-01-05,North,Storage,820,8
+2026-01-12,South,Compute,910,7
+2026-01-19,East,Network,760,6
+2026-02-02,North,Storage,880,9
+2026-02-09,South,Compute,950,8
+2026-02-16,East,Network,840,7
+2026-03-02,North,Compute,1020,9
+2026-03-09,South,Storage,790,7
+2026-03-16,East,Network,870,8
+2026-04-06,North,Network,930,8
+2026-04-13,South,Storage,860,8
+2026-04-20,East,Compute,1100,10
