@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360">
+<rect width="900" height="360" fill="#111827"/>
+<text x="28" y="42" fill="#93c5fd" font-family="monospace" font-size="18">$ docker compose up --build</text>
+<text x="28" y="84" fill="#d1d5db" font-family="monospace" font-size="17">Image bigdata-data-analysis Built</text>
+<text x="28" y="116" fill="#d1d5db" font-family="monospace" font-size="17">Container tp04-analysis Started</text>
+<text x="28" y="166" fill="#86efac" font-family="monospace" font-size="18">tp04-analysis | Rows: 6</text>
+<text x="28" y="198" fill="#86efac" font-family="monospace" font-size="18">tp04-analysis | Average score: 86.00</text>
+<text x="28" y="230" fill="#86efac" font-family="monospace" font-size="18">tp04-analysis | Categories:</text>
+<text x="28" y="262" fill="#86efac" font-family="monospace" font-size="18">tp04-analysis |   compute: 2</text>
+<text x="28" y="294" fill="#86efac" font-family="monospace" font-size="18">tp04-analysis |   network: 2</text>
+<text x="28" y="326" fill="#86efac" font-family="monospace" font-size="18">tp04-analysis |   storage: 2</text>
+</svg>
