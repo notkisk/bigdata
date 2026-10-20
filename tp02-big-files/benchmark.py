@@ -1,53 +1,86 @@
 import argparse
+import threading
 import time
 from pathlib import Path
-from resource import RUSAGE_SELF, getrusage
 
 import dask.dataframe as dd
 import pandas as pd
+import psutil
 
 
-def peak_mb():
-    return getrusage(RUSAGE_SELF).ru_maxrss / 1024
+class MemoryWatch:
+    def __init__(self):
+        self.process = psutil.Process()
+        self.highest = 0
+        self.running = True
+        self.thread = threading.Thread(target=self.watch, daemon=True)
+
+    def watch(self):
+        while self.running:
+            self.highest = max(self.highest, self.process.memory_info().rss)
+            time.sleep(0.05)
+
+    def __enter__(self):
+        self.thread.start()
+        return self
+
+    def __exit__(self, *_):
+        self.running = False
+        self.thread.join()
 
 
-def full_read(path):
+def measure(name, action):
     started = time.perf_counter()
-    frame = pd.read_csv(path)
-    result = frame["temperature"].mean()
-    return "pandas-full", result, time.perf_counter() - started, peak_mb()
+    try:
+        with MemoryWatch() as memory:
+            value, detail = action()
+        print(f"{name},{value:.2f},{time.perf_counter() - started:.2f},{memory.highest / 1024 ** 2:.1f},{detail}")
+    except MemoryError:
+        print(f"{name},MemoryError,{time.perf_counter() - started:.2f},-,allocation failed")
 
 
-def chunk_read(path, size):
-    started = time.perf_counter()
-    total = 0.0
-    count = 0
-    for frame in pd.read_csv(path, chunksize=size):
-        values = frame["temperature"].dropna()
-        total += values.sum()
-        count += values.size
-    return "pandas-chunks", total / count, time.perf_counter() - started, peak_mb()
+def full(path):
+    def action():
+        frame = pd.read_csv(path)
+        return frame["temperature"].mean(), "single dataframe"
+    measure("pandas-full", action)
 
 
-def dask_read(path):
-    started = time.perf_counter()
-    frame = dd.read_csv(path)
-    lazy_mean = frame["temperature"].mean()
-    result = lazy_mean.compute()
-    return "dask", result, time.perf_counter() - started, peak_mb()
+def chunks(path, size):
+    def action():
+        total = 0.0
+        count = 0
+        for frame in pd.read_csv(path, chunksize=size):
+            values = frame["temperature"].dropna()
+            total += values.sum()
+            count += values.size
+        return total / count, f"chunksize={size}"
+    measure("pandas-chunks", action)
+
+
+def dask(path, blocksize):
+    def action():
+        frame = dd.read_csv(path, blocksize=blocksize, dtype={"temperature": "float64"})
+        lazy = frame["temperature"].mean()
+        detail = f"partitions={frame.npartitions} graph_tasks={len(lazy.dask)}"
+        return lazy.compute(scheduler="threads"), detail
+    measure("dask", action)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("file", type=Path)
+    parser.add_argument("--method", choices=("all", "full", "chunks", "dask"), default="all")
     parser.add_argument("--chunksize", type=int, default=100000)
+    parser.add_argument("--blocksize", default="64MB")
     args = parser.parse_args()
-    for method in (full_read, lambda path: chunk_read(path, args.chunksize), dask_read):
-        try:
-            name, mean, seconds, memory = method(args.file)
-            print(f"{name}: mean={mean:.2f} time={seconds:.3f}s peak_rss={memory:.1f}MB")
-        except MemoryError:
-            print(f"{method.__name__}: MemoryError")
+    print("method,mean,time_seconds,peak_rss_mb,details")
+    if args.method in ("all", "full"):
+        full(args.file)
+    if args.method in ("all", "chunks"):
+        chunks(args.file, args.chunksize)
+    if args.method in ("all", "dask"):
+        dask(args.file, args.blocksize)
 
 
 if __name__ == "__main__":

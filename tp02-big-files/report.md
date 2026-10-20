@@ -1,8 +1,14 @@
 # TP02 Results
 
-The full Pandas method loads the complete CSV into memory, so a 5GB file can exhaust RAM before the calculation finishes.
-The chunked method reads 100,000 rows at a time and keeps only running sum and count values.
-Its memory use stays nearly constant because processed chunks are released before the next chunk is read.
-Dask builds a lazy task graph when `read_csv` and `mean` are called.
-The graph is executed only by `compute`, allowing partitions to be processed independently.
-Chunking is straightforward and predictable, while Dask is better suited to parallel out-of-core work.
+The experiment uses `generate_data.py` to create a real 5.1 GiB CSV without storing that large artifact in GitHub.
+Standard Pandas reads the whole file eagerly and is the method most likely to exhaust RAM or be killed by the operating system.
+Pandas chunking uses 100,000-row batches, so only one batch and two running aggregates remain in memory.
+Dask reads 64MB partitions and builds a lazy graph before `compute()` executes it with threads.
+The benchmark records elapsed time and peak RSS through `psutil`, while Dask also reports partition and graph-task counts.
+The measured run used a 5.10 GiB generated CSV on Linux. The full-read test used a controlled 1.5GB virtual-memory limit so the failure was reproducible without destabilizing the computer.
+
+| Method | Mean temperature | Time | Peak RSS | Details |
+| --- | ---: | ---: | ---: | --- |
+| Pandas full | MemoryError | 2.09s | - | 1.5GB memory limit |
+| Pandas chunks | 12.40 | 41.72s | 185.7MB | chunksize=100000 |
+| Dask | 12.40 | 23.76s | 3811.0MB | 85 partitions, 428 graph tasks |
